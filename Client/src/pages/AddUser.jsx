@@ -4,18 +4,36 @@ import {
   FormControlLabel,
   RadioGroup,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from '../Axios'
 
 const AddUser = () => {
+  const Navigate = useNavigate()
   const [formData, setFormData] = useState({
     fullname:"",
     email:"",
     gender:"",
   })
 
-  useEffect(() => {
-   console.log(formData)
-  }, [formData]);
+  const handleSubmit = (event) =>{
+  event.preventDefault()
+
+    axios.post('/api/adduser',{data:formData}).then((response)=>{
+      if(response.status == 200){
+        Navigate("/")
+        message.success("User Added Successfully")
+
+      }
+    }).catch((err)=>{
+      const errorMSG = err.response.data.error;
+      console.log(errorMSG);
+      message.error(errorMSG)
+    })
+  }
+
+  
   return (
     <div className="flex item-center justify-center">
       <div className="w-full p-6 mx-auto mt-40 ">
@@ -24,7 +42,7 @@ const AddUser = () => {
             <div className="mb-12">
               <div className="flex flex-wrap -mx-3">
                 <div className="w-full max-w-full px-3 m-auto flex-0 lg:w-8/12">
-                  <form className="relative mb-32">
+                  <form className="relative mb-32" onSubmit={ (event)=> handleSubmit(event)}>
                     <div
                       form="user"
                       className="absolute top-0 left-0 flex flex-col visible w-full h-auto min-w-0 p-4 break-words bg-white border-0 shadow-xl opacity-100  rounded-2xl bg-clip-border"
