@@ -1,10 +1,15 @@
 /* eslint-disable react/no-unknown-property */
 import { people } from "../assets";
-import { Pagination } from "@mui/material";
+import { Pagination, Button } from "@mui/material";
 const ListUsers = () => {
   return (
     <div className="w-full p-6 mx-auto bg-[#e9eff3] ">
-      <div className="w-[170px] sm:w-[270px]">
+      <div className="flex justify-between  w-full">
+        <div>
+        <Button variant="contained" color="success">
+  Add User
+</Button>
+        </div>
         <div className="relative mb-3 rounded" data-te-input-wrapper-init>
           <input
             type="search"
@@ -19,6 +24,7 @@ const ListUsers = () => {
             Search
           </label>
         </div>  
+
       </div>
 
       {/* table */}
@@ -29,33 +35,33 @@ const ListUsers = () => {
               <table className="items-center w-full mb-0 align-top border-gray-200 text-slate-500 ">
                 <thead className="align-bottom">
                   <tr>
-                    <th className="px-6 py-3 font-bold uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
+                    <th className="px-6 py-3 font-bold uppercase text-left bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
                       name
                     </th>
                     <th className="px-6 py-3 pl-2 font-bold uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
                       Gender
                     </th>
                     <th className="px-6 py-3 pl-2 font-bold uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
-                      review
+                      Status
                     </th>
                     <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
-                      email
+                      Email
                     </th>
                     <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
-                      employed
+                    id
                     </th>
                     <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
-                      id
+                      action
                     </th>
                   </tr>
                 </thead>
-                <tbody className="border-t-2 border-current border-solid ">
-                  <tr>
-                    <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap ">
-                      <div className="flex px-2 py-1">
+                <tbody className="border-t-2 border-current border-solid w-full">
+                  <tr className="w-full">
+                    <td className="p-2 bg-transparent flex  border-b whitespace-nowrap ">
+                      <div className="flex gap-2 px-3 py-1">
                         <div>
                           <img
-                            className="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-in-out h-9 w-9 rounded-xl"
+                            className="inline-flex items-center object-contain justify-center mr-7 h-9 w-9 rounded-xl"
                             src={people}
                             alt="avatar image"
                           />
@@ -67,12 +73,12 @@ const ListUsers = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap ">
+                    <td className="p-2 align-middle text-center bg-transparent border-b whitespace-nowrap ">
                       <p className="mb-0 text-sm leading-normal text-slate-400 ">
                         Manager
                       </p>
                     </td>
-                    <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap ">
+                    <td className="p-2 align-middle text-center bg-transparent border-b whitespace-nowrap ">
                       <span className="py-2.2 rounded-1.8 text-sm mr-6 inline-block whitespace-nowrap bg-transparent px-0 text-center align-baseline font-normal leading-none text-white">
                         <i className="rounded-circle mr-1.5 inline-block h-1.5 w-1.5 bg-cyan-500 align-middle"></i>
                         <span className="text-xs leading-tight text-slate-700 ">
