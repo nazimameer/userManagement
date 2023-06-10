@@ -67,8 +67,7 @@ const handleStatusChange = (event, userId) => {
     status : newStatus,
     id : userId,
   }
-  console.log(newStatus)
-  axios.patch('/api/editstatus',{ newStatus }).then((response)=>{
+  axios.patch('/api/editstatus',{ data }).then((response)=>{
     if(response.status == 200){
       setStatus(true)
     }else{

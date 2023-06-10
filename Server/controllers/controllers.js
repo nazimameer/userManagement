@@ -36,7 +36,19 @@ const getUser = async (req, res) => {
   }
 };
 
+const editStatus = async (req, res) => {
+    try{
+        const {id, status} = req.body.data;
+        await Users.findOneAndUpdate({_id:id}, {$set: {status: status}})
+        return res.status(200)
+    }catch(error){
+        return res.status(500)
+        .json({ error: "An Error occurred while changing status"})
+    }
+}
+
 module.exports = {
   addUser,
   getUser,
+  editStatus
 };
