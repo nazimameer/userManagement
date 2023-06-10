@@ -1,9 +1,9 @@
 import ListUsers from './ListUsers';
-import AddUsers from './AddUser';
-import EditUsers from './EditUser'
+import AddUser from './AddUser';
+import EditUser from './EditUser'
 
 export {
     ListUsers,
-    AddUsers,
-    EditUsers,
+    AddUser,
+    EditUser,
 }

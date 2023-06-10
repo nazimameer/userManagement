@@ -1,14 +1,25 @@
 /* eslint-disable react/no-unknown-property */
 import { people } from "../assets";
-import { Pagination, Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Pagination,
+  Button,
+  FormControl,
+  NativeSelect,
+  InputLabel,
+} from "@mui/material";
 const ListUsers = () => {
+  const [dropdown, setDropdown] = useState(false);
+  useEffect(() => {
+  console.log(dropdown)
+  }, [dropdown]);
   return (
     <div className="w-full p-6 mx-auto bg-[#e9eff3] ">
       <div className="flex justify-between  w-full">
         <div>
-        <Button variant="contained" color="success">
-  Add User
-</Button>
+          <Button variant="contained" color="success">
+            Add User
+          </Button>
         </div>
         <div className="relative mb-3 rounded" data-te-input-wrapper-init>
           <input
@@ -23,8 +34,7 @@ const ListUsers = () => {
           >
             Search
           </label>
-        </div>  
-
+        </div>
       </div>
 
       {/* table */}
@@ -48,7 +58,7 @@ const ListUsers = () => {
                       Email
                     </th>
                     <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
-                    id
+                      id
                     </th>
                     <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 border-solid shadow-none text-xxs tracking-none whitespace-nowrap text-slate-400 opacity-70   ">
                       action
@@ -56,7 +66,7 @@ const ListUsers = () => {
                   </tr>
                 </thead>
                 <tbody className="border-t-2 border-current border-solid w-full">
-                  <tr className="w-full">
+                  <tr className="w-full relative">
                     <td className="p-2 bg-transparent flex  border-b whitespace-nowrap ">
                       <div className="flex gap-2 px-3 py-1">
                         <div>
@@ -78,11 +88,25 @@ const ListUsers = () => {
                         Manager
                       </p>
                     </td>
-                    <td className="p-2 align-middle text-center bg-transparent border-b whitespace-nowrap ">
-                      <span className="py-2.2 rounded-1.8 text-sm mr-6 inline-block whitespace-nowrap bg-transparent px-0 text-center align-baseline font-normal leading-none text-white">
-                        <i className="rounded-circle mr-1.5 inline-block h-1.5 w-1.5 bg-cyan-500 align-middle"></i>
-                        <span className="text-xs leading-tight text-slate-700 ">
-                          positive
+                    <td className="p-2 align-middle flex justify-center items-center top-0 bg-transparent border-b whitespace-nowrap ">
+                      <span className="py-2.2 rounded-1.8  text-sm mr-6 inline-block whitespace-nowrap bg-transparent px-0 text-center align-baseline font-normal leading-none text-white">
+                        <span className="text-xs leading-tight text-slate-700 flex justify-center items-center">
+                          <FormControl fullWidth>
+                            <InputLabel
+                              variant="standard"
+                              htmlFor="uncontrolled-native"
+                            ></InputLabel>
+                            <NativeSelect
+                              defaultValue={"InActive"}
+                              inputProps={{
+                                name: "status",
+                                id: "uncontrolled-native",
+                              }}
+                            >
+                              <option value={"Active"}>Active</option>
+                              <option value={"InActive"}>InActive</option>
+                            </NativeSelect>
+                          </FormControl>
                         </span>
                       </span>
                     </td>
@@ -96,14 +120,52 @@ const ListUsers = () => {
                         23/04/18
                       </span>
                     </td>
-                    <td className="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap ">
+                    <td className="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap " >
+                     
+
                       <span className="text-sm leading-normal text-slate-400 ">
-                        43431
+                        <div
+                          x-data="{ isOpen: true }"
+                          className="relative inline-block "
+                        >
+                          <button
+                          type="button"
+                           onClick={()=>{
+                            setDropdown(!dropdown)
+                            console.log(dropdown);
+                           }}
+                            className="relative z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md  focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring  focus:outline-none"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-5 h-5"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                          </button>
+                        </div>
                       </span>
                     </td>
+                    
                   </tr>
-                 
                 </tbody>
+                {dropdown ? (
+                      <div className="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl ">
+                        <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                          View 
+                        </div>
+                        <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                          Edit
+                        </div>
+                        <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                          Delete
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
               </table>
               <div
                 className="ps__rail-x"
@@ -131,8 +193,14 @@ const ListUsers = () => {
       </div>
 
       <div className="w-full flex justify-center items-center">
-        <div className=""> 
-          <Pagination count={100} variant="outlined" shape="rounded" siblingCount={0}  boundaryCount={1}/>
+        <div className="">
+          <Pagination
+            count={100}
+            variant="outlined"
+            shape="rounded"
+            siblingCount={0}
+            boundaryCount={1}
+          />
         </div>
       </div>
     </div>
