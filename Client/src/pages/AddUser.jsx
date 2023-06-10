@@ -4,11 +4,21 @@ import {
   FormControlLabel,
   RadioGroup,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const AddUser = () => {
+  const [formData, setFormData] = useState({
+    fullname:"",
+    email:"",
+    gender:"",
+  })
+
+  useEffect(() => {
+   console.log(formData)
+  }, [formData]);
   return (
     <div className="flex item-center justify-center">
-      <div className="w-full p-6 mx-auto mt-10 ">
+      <div className="w-full p-6 mx-auto mt-40 ">
         <div className="flex flex-wrap -mx-3  ">
           <div className="w-full max-w-full px-3 flex-0">
             <div className="mb-12">
@@ -28,13 +38,16 @@ const AddUser = () => {
                           <div className="w-full max-w-full px-3 flex-0 sm:w-6/12">
                             <label
                               className="mb-2 ml-1 text-xs font-bold text-slate-700 "
-                              htmlFor="First Name"
+                              htmlFor="fullname"
                             >
                               Full Name
                             </label>
                             <input
+                            onChange={(e)=>{
+                              setFormData({...formData, [e.target.name]:e.target.value})
+                            }}
                               type="text"
-                              name="First Name"
+                              name="fullname"
                               placeholder="eg. Michael"
                               className="focus:shadow-primary-outline  text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                             />
@@ -42,13 +55,16 @@ const AddUser = () => {
                           <div className="w-full max-w-full px-3 mt-4 flex-0 sm:mt-0 sm:w-6/12">
                             <label
                               className="mb-2 ml-1 text-xs font-bold text-slate-700 /80"
-                              htmlFor="Last Name"
+                              htmlFor="email"
                             >
                               Email Address
                             </label>
                             <input
+                            onChange={(e)=>{
+                              setFormData({...formData, [e.target.name]:e.target.value})
+                            }}
                               type="text"
-                              name="Last Name"
+                              name="email"
                               placeholder="eg. Prior"
                               className="focus:shadow-primary-outline  text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                             />
@@ -66,6 +82,10 @@ const AddUser = () => {
                               <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
                                 name="controlled-radio-buttons-group"
+                                value={formData.gender}
+                                onChange={(e)=>{
+                                  setFormData({...formData, ["gender"]:e.target.value})
+                                }}
                               >
                                 <div className="flex">
                                   <FormControlLabel
@@ -85,9 +105,8 @@ const AddUser = () => {
                         </div>
                         <div className="flex mt-6">
                           <button
-                            type="button"
+                            type="submit"
                             aria-controls="address"
-                            href="/"
                             className="inline-block px-6 py-3 mb-0 ml-auto text-xs font-bold text-right text-white uppercase align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs  bg-gradient-to-tl from-zinc-800 to-zinc-700 leading-pro tracking-tight-rem bg-150 bg-x-25"
                           >
                             Add
