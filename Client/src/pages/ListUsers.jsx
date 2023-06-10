@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { people } from "../assets";
 import { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import {
   Pagination,
   Button,
@@ -9,6 +10,7 @@ import {
   InputLabel,
 } from "@mui/material";
 const ListUsers = () => {
+  const Navigate = useNavigate()
   const [dropdown, setDropdown] = useState(false);
   useEffect(() => {
   console.log(dropdown)
@@ -16,7 +18,7 @@ const ListUsers = () => {
   return (
     <div className="w-full p-6 mx-auto bg-[#e9eff3] ">
       <div className="flex justify-between  w-full">
-        <div>
+        <div onClick={()=> Navigate("/adduser")}>
           <Button variant="contained" color="success">
             Add User
           </Button>
