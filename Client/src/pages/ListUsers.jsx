@@ -10,6 +10,8 @@ import {
   NativeSelect,
   InputLabel,
 } from "@mui/material";
+import { ExportToCsv } from 'export-to-csv';
+import { message } from "antd";
 import { people } from "../assets";
 
 const ListUsers = () => {
@@ -79,17 +81,70 @@ const ListUsers = () => {
       if (data.length !== 0) {
         setUsers(data);
         setIsLength(true);
-      } else {
-        setIsLength(false);
       }
+    }).catch((err)=>{
+      setIsLength(false);
     });
   }, [status]);
+
+  useEffect(() => {
+    axios.get("/api/getusers").then((response) => {
+      const data = response.data;
+      if (data.length !== 0) {
+        setUsers(data);
+        setIsLength(true);
+      }
+    }).catch((err)=>{
+      setIsLength(false);
+    });
+  }, [isLength]);
+
+  const handleDelete = (id) => {
+    axios.post('/api/deleteuser', {id}).then((response) => {
+      if(response.status == 200) {
+        message.success("User deleted successfully")
+        axios.get("/api/getusers").then((response) => {
+          const data = response.data;
+          if (data.length !== 0) {
+            setUsers(data);
+            setIsLength(true);
+          } else {
+            setIsLength(false);
+          }
+        });
+      }
+    })
+  }
+
+  const handleExportClick = () =>{
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: false,
+      title: '',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+
+    const csvExporter = new ExportToCsv(options);
+
+    csvExporter.generateCsv(users);
+  }
   return (
     <div className="w-full p-6 mx-auto bg-[#e9eff3] ">
       <div className="flex justify-between  w-full">
         <div onClick={() => Navigate("/adduser")}>
           <Button variant="contained" color="success">
             Add User
+          </Button>
+        </div>
+
+        <div onClick={handleExportClick }>
+          <Button variant="contained" color="success">
+            Eport to csv
           </Button>
         </div>
         <div className="relative mb-3 rounded" data-te-input-wrapper-init>
@@ -138,7 +193,7 @@ const ListUsers = () => {
                   </tr>
                 </thead>
                 <tbody className="border-t-2 border-current border-solid w-full">
-                  {isLength ? (
+                  {isLength && (
                     displayedItems.map((user) => {
                       return (
                         <tr className="w-full relative" key={user._id}>
@@ -218,7 +273,11 @@ const ListUsers = () => {
 
                                 {selectedUserId === user._id ? (
                                   <div className="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl ">
-                                    <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <div 
+                                    onClick={() =>
+                                      Navigate(`/viewuser/${user._id}`)
+                                    }
+                                    className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                       View
                                     </div>
                                     <div
@@ -229,7 +288,11 @@ const ListUsers = () => {
                                     >
                                       Edit
                                     </div>
-                                    <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <div 
+                                    onClick={() =>
+                                      handleDelete(user._id)
+                                    }
+                                    className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                       Delete
                                     </div>
                                   </div>
@@ -242,8 +305,6 @@ const ListUsers = () => {
                         </tr>
                       );
                     })
-                  ) : (
-                    <React.Fragment></React.Fragment>
                   )}
                 </tbody>
               </table>

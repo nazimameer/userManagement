@@ -173,7 +173,7 @@ const EditUser = () => {
                             aria-controls="address"
                             className="inline-block px-6 py-3 mb-0 ml-auto text-xs font-bold text-right text-white uppercase align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs  bg-gradient-to-tl from-zinc-800 to-zinc-700 leading-pro tracking-tight-rem bg-150 bg-x-25"
                           >
-                            Add
+                            Edit
                           </button>
                         </div>
                       </div>

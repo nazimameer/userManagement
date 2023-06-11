@@ -82,8 +82,21 @@ const editUser = async (req, res) => {
         $set: { fullname: fullname, email: email, gender: gender },
       }
     ).then(() => {
-      return res.status(200).json({success: true});
+      return res.status(200).json({ success: true });
     });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "An Error occurred while changing status" });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await Users.deleteOne({ _id: id }).then(()=>{
+      return res.status(200).json({success:true});
+    })
   } catch (error) {
     return res
       .status(500)
@@ -97,4 +110,5 @@ module.exports = {
   editStatus,
   userDetails,
   editUser,
+  deleteUser,
 };
