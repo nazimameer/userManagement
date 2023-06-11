@@ -5,11 +5,7 @@ const app = express();
 const  mongoose = require('mongoose')
 dotenv.config()
 mongoose.connect(process.env.MONGO_CONNECTION)
-app.use(
-    cors({
-      origin: 'http://127.0.0.1:5173',
-    })
-  );
+app.use(cors());
 
 
 app.use(express.json());
