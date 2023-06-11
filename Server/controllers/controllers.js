@@ -2,6 +2,11 @@ const Users = require("../model/Documents");
 
 const addUser = async (req, res) => {
   try {
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
     const { fullname, email, gender } = req.body.data;
 
     if (!fullname) {
@@ -14,6 +19,10 @@ const addUser = async (req, res) => {
 
     if (!gender) {
       return res.status(400).json({ error: "Gender is required" });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ error: "Invalid email address" });
     }
 
     await Users.create({ fullname, email, gender });
@@ -62,6 +71,12 @@ const userDetails = async (req, res) => {
 
 const editUser = async (req, res) => {
   try {
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
     const { fullname, email, gender, _id } = req.body.data;
 
     if (!fullname) {
@@ -74,6 +89,10 @@ const editUser = async (req, res) => {
 
     if (!gender) {
       return res.status(400).json({ error: "Gender is required" });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ error: "Invalid email address" });
     }
 
     await Users.findOneAndUpdate(
