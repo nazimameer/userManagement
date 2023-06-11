@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unknown-property */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../Axios";
 import {
@@ -12,25 +12,23 @@ import {
 } from "@mui/material";
 import { people } from "../assets";
 
-
 const ListUsers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState([]);
-  const [isLength, setIsLength] = useState(false)
-  const [status,setStatus] = useState(false)
+  const [isLength, setIsLength] = useState(false);
+  const [status, setStatus] = useState(false);
   useEffect(() => {
     axios.get("/api/getusers").then((response) => {
       const data = response.data;
-      if(data.length !== 0){
+      if (data.length !== 0) {
         setUsers(data);
-        setIsLength(true)
-      }else {
-        setIsLength(false)
+        setIsLength(true);
+      } else {
+        setIsLength(false);
       }
     });
   }, []);
 
-  
   const Navigate = useNavigate();
   const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -50,42 +48,42 @@ const ListUsers = () => {
           user.gender.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : users;
-// eslint-disable-next-line no-unused-vars
-    const [itemsPerPage, setItemsPerPage] = useState(5);
-const [currentPage, setCurrentPage] = useState(1);
-const startIndex = (currentPage - 1) * itemsPerPage;
-const endIndex = startIndex + itemsPerPage;
-const displayedItems = filteredList.slice(startIndex, endIndex);
-const totalPages = Math.ceil(filteredList.length / itemsPerPage);
-const handlePageChange  = (event, value) => {
-  setCurrentPage(value);
-};
+  // eslint-disable-next-line no-unused-vars
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedItems = filteredList.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
-const handleStatusChange = (event, userId) => {
-  const newStatus = event.target.value;
-  const data = {
-    status : newStatus,
-    id : userId,
-  }
-  axios.patch('/api/editstatus',{ data }).then((response)=>{
-    if(response.status == 200){
-      setStatus(true)
-    }else{
-      setStatus(false)
-    }
-  })
-};
-useEffect(() => {
-  axios.get("/api/getusers").then((response) => {
-    const data = response.data;
-    if(data.length !== 0){
-      setUsers(data);
-      setIsLength(true)
-    }else {
-      setIsLength(false)
-    }
-  });
-}, [status]);
+  const handleStatusChange = (event, userId) => {
+    const newStatus = event.target.value;
+    const data = {
+      status: newStatus,
+      id: userId,
+    };
+    axios.patch("/api/editstatus", { data }).then((response) => {
+      if (response.status == 200) {
+        setStatus(true);
+      } else {
+        setStatus(false);
+      }
+    });
+  };
+  useEffect(() => {
+    axios.get("/api/getusers").then((response) => {
+      const data = response.data;
+      if (data.length !== 0) {
+        setUsers(data);
+        setIsLength(true);
+      } else {
+        setIsLength(false);
+      }
+    });
+  }, [status]);
   return (
     <div className="w-full p-6 mx-auto bg-[#e9eff3] ">
       <div className="flex justify-between  w-full">
@@ -140,7 +138,7 @@ useEffect(() => {
                   </tr>
                 </thead>
                 <tbody className="border-t-2 border-current border-solid w-full">
-                  { isLength ? 
+                  {isLength ? (
                     displayedItems.map((user) => {
                       return (
                         <tr className="w-full relative" key={user._id}>
@@ -179,7 +177,9 @@ useEffect(() => {
                                       name: "status",
                                       id: "uncontrolled-native",
                                     }}
-                                    onChange={(event) => handleStatusChange(event, user._id)}
+                                    onChange={(event) =>
+                                      handleStatusChange(event, user._id)
+                                    }
                                   >
                                     <option value={"Active"}>Active</option>
                                     <option value={"InActive"}>InActive</option>
@@ -221,7 +221,12 @@ useEffect(() => {
                                     <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                       View
                                     </div>
-                                    <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <div
+                                      onClick={() =>
+                                        Navigate(`/edituser/${user._id}`)
+                                      }
+                                      className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    >
                                       Edit
                                     </div>
                                     <div className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -237,12 +242,11 @@ useEffect(() => {
                         </tr>
                       );
                     })
-                  :
-                  <React.Fragment></React.Fragment>
-                  }
+                  ) : (
+                    <React.Fragment></React.Fragment>
+                  )}
                 </tbody>
               </table>
-              
             </div>
           </div>
         </div>
@@ -255,7 +259,9 @@ useEffect(() => {
             shape="rounded"
             siblingCount={0}
             boundaryCount={1}
-            count={totalPages} page={currentPage} onChange={handlePageChange }
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
           />
         </div>
       </div>
