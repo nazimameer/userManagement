@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 //Routes
 const apiRoutes = require('./routes/routes')
 
-app.use('/api',apiRoutes)
+app.use('/backend/api',apiRoutes)
 
 
 const port = process.env.Port_Number || 8000;
